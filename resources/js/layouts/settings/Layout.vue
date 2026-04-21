@@ -23,6 +23,10 @@ const sidebarNavItems: NavItem[] = [
         title: 'Appearance',
         href: editAppearance(),
     },
+    {
+        title: 'Frontend users',
+        href: '/settings/frontend-users',
+    },
 ];
 
 const { isCurrentOrParentUrl } = useCurrentUrl();
