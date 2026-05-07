@@ -6,7 +6,7 @@ import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { index, store } from '@/routes/users';
+import { index } from '@/routes/users';
 import { update } from '@/routes/users';
 
 interface User {

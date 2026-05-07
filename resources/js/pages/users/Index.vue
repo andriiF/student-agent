@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import { Pencil, Trash2 } from 'lucide-vue-next';
 import DataTable from '@/components/DataTable.vue';
 import Pagination from '@/components/Pagination.vue';
