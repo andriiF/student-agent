@@ -42,9 +42,7 @@ class UserController extends Controller
 
     public function show(User $user): Response
     {
-        return Inertia::render('users/Show', [
-            'user' => $user,
-        ]);
+        abort(404);
     }
 
     public function edit(User $user): Response
@@ -65,6 +63,11 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         $this->userService->deleteUser($user);
+
+        if (auth()->user()->id === $user->id) {
+            return redirect()->route('login')
+                ->with('success', 'User deleted successfully.');
+        }
 
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully.');

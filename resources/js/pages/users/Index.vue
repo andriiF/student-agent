@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { Pencil, Trash2 } from 'lucide-vue-next';
 import DataTable from '@/components/DataTable.vue';
 import Pagination from '@/components/Pagination.vue';
 
@@ -35,22 +36,9 @@ const columns = [
     { key: 'email', label: 'Email' },
 ];
 
-const userToDelete = ref<User | null>(null);
-const showDeleteDialog = ref(false);
-
-const openDeleteDialog = (user: User) => {
-    userToDelete.value = user;
-    showDeleteDialog.value = true;
-};
-
-const confirmDelete = () => {
-    if (userToDelete.value) {
-        router.delete(destroy(userToDelete.value.id), {
-            onSuccess: () => {
-                showDeleteDialog.value = false;
-                userToDelete.value = null;
-            },
-        });
+const deleteUser = (user: User) => {
+    if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+        router.delete(destroy(user.id));
     }
 };
 </script>
@@ -73,13 +61,14 @@ const confirmDelete = () => {
                 <Link
                     :href="edit(row.id)"
                     class="text-indigo-600 hover:text-indigo-900"
-                    >Edit</Link
                 >
+                    <Pencil class="h-4 w-4" />
+                </Link>
                 <button
-                    @click="openDeleteDialog(row)"
+                    @click="deleteUser(row)"
                     class="cursor-pointer text-red-600 hover:text-red-900"
                 >
-                    Delete
+                    <Trash2 class="h-4 w-4" />
                 </button>
             </template>
         </DataTable>

@@ -6,31 +6,20 @@ import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { index, store } from '@/routes/users';
-import { update } from '@/routes/users';
-
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-}
-
-const props = defineProps<{ user: User }>();
+import { index } from '@/routes/users';
+import { store } from '@/routes/users';
 </script>
 
 <template>
-    <Head title="Edit User" />
+    <Head title="Create User" />
     <div class="mt-5 grid grid-cols-6 gap-4">
         <div class="col-span-6 px-4 md:col-span-4 md:col-start-2 md:px-0">
             <div class="flex flex-col space-y-6">
-                <Heading variant="small" title="User Edit" />
+                <Heading variant="small" title="Create User" />
 
                 <Form
-                    v-bind="update(props.user.id)"
-                    :action="update(props.user.id).url"
+                    v-bind="store()"
+                    :action="store().url"
                     class="space-y-6"
                     v-slot="{ errors, processing }"
                 >
@@ -40,7 +29,6 @@ const props = defineProps<{ user: User }>();
                             id="name"
                             name="name"
                             class="mt-1 block w-full"
-                            :default-value="props.user.name"
                             required
                             autocomplete="name"
                             placeholder="Full name"
@@ -55,7 +43,6 @@ const props = defineProps<{ user: User }>();
                             type="email"
                             name="email"
                             class="mt-1 block w-full"
-                            :default-value="props.user.email"
                             required
                             autocomplete="email"
                             placeholder="Email address"
@@ -64,32 +51,28 @@ const props = defineProps<{ user: User }>();
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="password">
-                            New password
-                            <span class="font-normal text-muted-foreground"
-                                >(optional)</span
-                            >
-                        </Label>
+                        <Label for="password"> Password </Label>
                         <PasswordInput
                             id="password"
                             name="password"
                             class="mt-1 block w-full"
+                            required
                             autocomplete="new-password"
-                            placeholder="Leave blank to keep current password"
+                            placeholder="Password"
                         />
                         <InputError class="mt-2" :message="errors.password" />
                     </div>
 
                     <div class="grid gap-2">
                         <Label for="password_confirmation"
-                            >Confirm new password</Label
+                            >Confirm password</Label
                         >
                         <PasswordInput
                             id="password_confirmation"
                             name="password_confirmation"
                             class="mt-1 block w-full"
                             autocomplete="new-password"
-                            placeholder="Confirm new password"
+                            placeholder="Confirm password"
                         />
                         <InputError
                             class="mt-2"
