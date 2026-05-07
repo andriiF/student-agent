@@ -13,17 +13,63 @@ defineProps<Props>();
 </script>
 
 <template>
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 40 42"
-        :class="className"
-        v-bind="$attrs"
-    >
+    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Studen user icon">
         <path
-            fill="currentColor"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M17.2 5.633 8.6.855 0 5.633v26.51l16.2 9 16.2-9v-8.442l7.6-4.223V9.856l-8.6-4.777-8.6 4.777V18.3l-5.6 3.111V5.633ZM38 18.301l-5.6 3.11v-6.157l5.6-3.11V18.3Zm-1.06-7.856-5.54 3.078-5.54-3.079 5.54-3.078 5.54 3.079ZM24.8 18.3v-6.157l5.6 3.111v6.158L24.8 18.3Zm-1 1.732 5.54 3.078-13.14 7.302-5.54-3.078 13.14-7.3v-.002Zm-16.2 7.89 7.6 4.222V38.3L2 30.966V7.92l5.6 3.111v16.892ZM8.6 9.3 3.06 6.222 8.6 3.143l5.54 3.08L8.6 9.3Zm21.8 15.51-13.2 7.334V38.3l13.2-7.334v-6.156ZM9.6 11.034l5.6-3.11v14.6l-5.6 3.11v-14.6Z"
+            d="M12 15L25 10L38 15L25 20L12 15Z"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linejoin="round"
+        />
+
+        <path
+            d="M36 16V25"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+
+        <path
+            d="M34 25H38"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+
+        <path
+            d="M16 20V23C16 28 20 32 25 32C30 32 34 28 34 23V20"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+
+        <circle
+            cx="20"
+            cy="24"
+            r="4"
+            stroke="currentColor"
+            stroke-width="3"
+        />
+
+        <circle
+            cx="30"
+            cy="24"
+            r="4"
+            stroke="currentColor"
+            stroke-width="3"
+        />
+
+        <path
+            d="M24 24H26"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+
+        <path
+            d="M14 43C15 37 19 34 25 34C31 34 35 37 36 43"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
         />
     </svg>
 </template>

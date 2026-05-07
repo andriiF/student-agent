@@ -21,10 +21,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('throttle:6,1')
         ->name('user-password.update');
 
-    Route::get('settings/frontend-users', [FrontendUserController::class, 'index'])->name('frontend-users.index');
-    Route::post('settings/frontend-users', [FrontendUserController::class, 'store'])->name('frontend-users.store');
-    Route::patch('settings/frontend-users/{frontendUser}', [FrontendUserController::class, 'update'])->name('frontend-users.update');
-    Route::delete('settings/frontend-users/{frontendUser}', [FrontendUserController::class, 'destroy'])->name('frontend-users.destroy');
-
     Route::inertia('settings/appearance', 'settings/Appearance')->name('appearance.edit');
 });

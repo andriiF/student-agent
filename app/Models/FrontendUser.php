@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['firstname', 'lastname', 'phone', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class FrontendUser extends Authenticatable
 {
     use HasFactory, HasUuids, Notifiable;
+
+    protected $primaryKey = 'uuid';
 
     protected $keyType = 'string';
 

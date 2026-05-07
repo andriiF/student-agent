@@ -24,11 +24,16 @@ class FrontendUserRepository
         return FrontendUser::query()->create($attributes);
     }
 
-    public function paginate(int $perPage = 15): LengthAwarePaginator
+    public function paginate(?string $search = null, int $perPage = 15): LengthAwarePaginator
     {
         return FrontendUser::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
             ->latest()
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
     }
 
     public function update(FrontendUser $user, array $attributes): bool

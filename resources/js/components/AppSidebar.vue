@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid, User2 } from 'lucide-vue-next';
+import { LayoutGrid, User2 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,6 +15,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as frontUserIndex } from '@/routes/frontendUsers';
 import { index as userIndex } from '@/routes/users';
 import type { NavItem } from '@/types';
 
@@ -29,13 +30,18 @@ const mainNavItems: NavItem[] = [
         href: userIndex(),
         icon: User2,
     },
+    {
+        title: 'Frontend users',
+        href: frontUserIndex(),
+        icon: User2,
+    },
 ];
 
 const footerNavItems: NavItem[] = [];
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="offcanvas" variant="inset">
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
