@@ -20,19 +20,12 @@ class QuizController extends Controller
 
     public function index(Request $request): Response
     {
-        $quizzes = $this->quizService->getPaginated($request->input('search'));
-
-        return Inertia::render('quizzes/Index', [
-            'quizzes' => $quizzes,
-            'filters' => $request->only(['search']),
-        ]);
+        abort(404);
     }
 
     public function create(): Response
     {
-        return Inertia::render('quizzes/Create', [
-            'topics' => Topic::query()->orderBy('name')->get(['uuid', 'name']),
-        ]);
+        abort(404);
     }
 
     public function store(QuizRequest $request): RedirectResponse

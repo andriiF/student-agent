@@ -20,19 +20,12 @@ class AnswerController extends Controller
 
     public function index(Request $request): Response
     {
-        $answers = $this->answerService->getPaginated($request->input('search'));
-
-        return Inertia::render('answers/Index', [
-            'answers' => $answers,
-            'filters' => $request->only(['search']),
-        ]);
+        abort(404);
     }
 
     public function create(): Response
     {
-        return Inertia::render('answers/Create', [
-            'questions' => Question::query()->orderBy('name')->get(['uuid', 'name']),
-        ]);
+        abort(404);
     }
 
     public function store(AnswerRequest $request): RedirectResponse

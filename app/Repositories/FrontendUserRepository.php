@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\FrontendUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class FrontendUserRepository
 {
@@ -34,6 +35,11 @@ class FrontendUserRepository
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
+    }
+
+    public function get(): Collection
+    {
+        return FrontendUser::query()->select('uuid', 'firstname', 'lastname', 'email', 'phone')->get();
     }
 
     public function update(FrontendUser $user, array $attributes): bool

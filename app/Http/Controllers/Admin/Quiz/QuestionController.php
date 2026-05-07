@@ -24,19 +24,12 @@ class QuestionController extends Controller
 
     public function index(Request $request): Response
     {
-        $questions = $this->questionService->getPaginated($request->input('search'));
-
-        return Inertia::render('questions/Index', [
-            'questions' => $questions,
-            'filters' => $request->only(['search']),
-        ]);
+        abort(404);
     }
 
     public function create(): Response
     {
-        return Inertia::render('questions/Create', [
-            'quizzes' => $this->quizService->getAllOrdered(['uuid', 'name']),
-        ]);
+        abort(404);
     }
 
     public function store(QuestionRequest $request): RedirectResponse

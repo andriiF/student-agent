@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin\Quiz;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Quiz\TopicRequest;
+use App\Http\Resources\FrontendUserResource;
 use App\Models\FrontendUser;
 use App\Models\Quiz\Topic;
+use App\Services\FrontendUserService;
 use App\Services\Quiz\TopicService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,7 +16,8 @@ use Inertia\Response;
 
 class TopicController extends Controller
 {
-    public function __construct(protected TopicService $topicService)
+    public function __construct(protected TopicService        $topicService,
+                                protected FrontendUserService $frontendUserService)
     {
     }
 
@@ -29,19 +33,16 @@ class TopicController extends Controller
 
     public function create(): Response
     {
+        $frontendUsers = $this->frontendUserService->get();
+
         return Inertia::render('topics/Create', [
-            'frontendUsers' => FrontendUser::query()->orderBy('firstname')->get(['uuid', 'firstname', 'lastname', 'email']),
+            'frontendUsers' => FrontendUserResource::collection($frontendUsers)
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(TopicRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'front_user_id' => ['required', 'string', 'exists:frontend_users,uuid'],
-        ]);
-
-        $this->topicService->create($validated);
+        $this->topicService->create($request->validated());
 
         return redirect()->route('topics.index')
             ->with('success', 'Topic created successfully.');
@@ -49,20 +50,17 @@ class TopicController extends Controller
 
     public function edit(Topic $topic): Response
     {
+        $frontendUsers = $this->frontendUserService->get();
+
         return Inertia::render('topics/Edit', [
             'topic' => $topic->load('quizzes.questions'),
-            'frontendUsers' => FrontendUser::query()->orderBy('firstname')->get(['uuid', 'firstname', 'lastname', 'email']),
+            'frontendUsers' => FrontendUserResource::collection($frontendUsers)
         ]);
     }
 
-    public function update(Request $request, Topic $topic): RedirectResponse
+    public function update(TopicRequest $request, Topic $topic): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'front_user_id' => ['required', 'string', 'exists:frontend_users,uuid'],
-        ]);
-
-        $this->topicService->update($topic, $validated);
+        $this->topicService->update($topic, $request->validated());
 
         return redirect()->route('topics.index')
             ->with('success', 'Topic updated successfully.');

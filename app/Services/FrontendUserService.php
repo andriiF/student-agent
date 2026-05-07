@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\FrontendUser;
 use App\Repositories\FrontendUserRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
 class FrontendUserService
@@ -16,6 +17,11 @@ class FrontendUserService
     public function getPaginatedFrontendUsers(?string $search, int $perPage = 15): LengthAwarePaginator
     {
         return $this->frontendUserRepository->paginate($search, $perPage);
+    }
+
+    public function get(): Collection
+    {
+        return $this->frontendUserRepository->get();
     }
 
     public function createFrontendUser(array $data): FrontendUser

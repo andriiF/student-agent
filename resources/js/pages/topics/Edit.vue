@@ -62,7 +62,7 @@ const props = defineProps<{ topic: Topic; frontendUsers: FrontendUser[] }>();
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem
-                                    v-for="user in frontendUsers"
+                                    v-for="user in frontendUsers.data"
                                     :key="user.uuid"
                                     :value="user.uuid"
                                 >
