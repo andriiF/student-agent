@@ -6,14 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { index, update } from '@/routes/frontendUsers';
-
-interface FrontendUser {
-    uuid: string;
-    firstname: string;
-    lastname: string;
-    phone: string | null;
-    email: string;
-}
+import type { FrontendUser } from '@/types';
 
 const props = defineProps<{ frontendUser: FrontendUser }>();
 </script>

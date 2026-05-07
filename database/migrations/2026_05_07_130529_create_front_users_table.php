@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('frontend_users', function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid()->primary()->unique();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('phone')->nullable();

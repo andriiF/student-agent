@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, User2 } from 'lucide-vue-next';
+
+import { LayoutGrid, User2, MessageCircleQuestion } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -17,6 +18,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as frontUserIndex } from '@/routes/frontendUsers';
 import { index as userIndex } from '@/routes/users';
+import { index as topicIndex } from '@/routes/topics';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -34,6 +36,11 @@ const mainNavItems: NavItem[] = [
         title: 'Frontend users',
         href: frontUserIndex(),
         icon: User2,
+    },
+    {
+        title: 'Topics',
+        href: topicIndex(),
+        icon: MessageCircleQuestion,
     },
 ];
 

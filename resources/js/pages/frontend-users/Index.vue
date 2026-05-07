@@ -7,14 +7,7 @@ import { create } from '@/routes/frontendUsers';
 import { edit } from '@/routes/frontendUsers';
 import { destroy } from '@/routes/frontendUsers';
 import { Pencil, Trash2 } from 'lucide-vue-next';
-
-interface FrontendUser {
-    uuid: string;
-    firstname: string;
-    lastname: string;
-    phone: string | null;
-    email: string;
-}
+import type { FrontendUser } from '@/types';
 
 interface Props {
     frontendUsers: {
