@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multiselect';
+import QuestionManager from '@/pages/quizzes/QuestionManager.vue';
 import { dashboard } from '@/routes';
 import { index, update } from '@/routes/quizzes';
 import { edit as editTopic } from '@/routes/topics';
@@ -40,6 +41,11 @@ const topicOptions = computed(() =>
                 />
                 <Heading variant="small" title="Edit Quiz" />
 
+                <QuestionManager
+                    :questions="props.quiz.questions ?? []"
+                    :quiz-uuid="props.quiz.uuid"
+                />
+                <hr class="border-border" />
                 <Form
                     v-bind="update(props.quiz.uuid)"
                     :action="update(props.quiz.uuid).url"
@@ -88,6 +94,8 @@ const topicOptions = computed(() =>
                         >
                     </div>
                 </Form>
+
+
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Services\Quiz;
 use App\Models\Quiz\Quiz;
 use App\Repositories\Quiz\QuizRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class QuizService
 {
@@ -15,6 +16,11 @@ class QuizService
     public function getPaginated(?string $search, int $perPage = 15): LengthAwarePaginator
     {
         return $this->quizRepository->paginate($search, $perPage);
+    }
+
+    public function getAllOrdered(array $columns): Collection
+    {
+        return $this->quizRepository->getAllOrdered($columns);
     }
 
     public function create(array $data): Quiz

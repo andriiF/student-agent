@@ -1,15 +1,35 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import { dashboard } from '@/routes';
 import { index, update } from '@/routes/questions';
+import { edit as editQuiz } from '@/routes/quizzes';
+import { edit as editTopic } from '@/routes/topics';
 import type { Quiz, Question } from '@/types';
 
 const props = defineProps<{ question: Question; quizzes: Quiz[] }>();
+
+console.log(props.question.quiz);
+
+const topicHref = props.question.quiz.topics?.[0]?.uuid
+    ? editTopic(props.question.quiz.topics[0].uuid).url
+    : null;
+
+const quizHref = props.question.quiz.uuid
+    ? editQuiz(props.question.quiz.uuid).url
+    : null;
 </script>
 
 <template>
@@ -17,9 +37,22 @@ const props = defineProps<{ question: Question; quizzes: Quiz[] }>();
     <div class="mt-5 grid grid-cols-6 gap-4">
         <div class="col-span-6 px-4 md:col-span-4 md:col-start-2 md:px-0">
             <div class="flex flex-col space-y-6">
+                <Breadcrumbs
+                    :breadcrumbs="[
+                        { title: 'Dashboard', href: dashboard() },
+                        { title: 'Topic', href: topicHref },
+                        { title: 'Quiz', href: quizHref },
+                        { title: 'Edit Question' },
+                    ]"
+                />
                 <Heading variant="small" title="Edit Question" />
 
-                <Form v-bind="update(props.question.uuid)" class="space-y-6" v-slot="{ errors, processing }">
+                <Form
+                    v-bind="update(props.question.uuid)"
+                    :action="update(props.question.uuid).url"
+                    class="space-y-6"
+                    v-slot="{ errors, processing }"
+                >
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
                         <Input
@@ -35,12 +68,20 @@ const props = defineProps<{ question: Question; quizzes: Quiz[] }>();
 
                     <div class="grid gap-2">
                         <Label for="quiz_id">Quiz</Label>
-                        <Select name="quiz_id" :default-value="props.question.quiz_id" required>
+                        <Select
+                            name="quiz_id"
+                            :default-value="props.question.quiz_id"
+                            required
+                        >
                             <SelectTrigger class="w-full">
                                 <SelectValue placeholder="Select a quiz" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem v-for="quiz in quizzes" :key="quiz.uuid" :value="quiz.uuid">
+                                <SelectItem
+                                    v-for="quiz in quizzes"
+                                    :key="quiz.uuid"
+                                    :value="quiz.uuid"
+                                >
                                     {{ quiz.name }}
                                 </SelectItem>
                             </SelectContent>
@@ -50,7 +91,11 @@ const props = defineProps<{ question: Question; quizzes: Quiz[] }>();
 
                     <div class="flex items-center gap-4">
                         <Button :disabled="processing">Save</Button>
-                        <Link :href="index()" class="text-sm text-muted-foreground hover:text-foreground">Cancel</Link>
+                        <Link
+                            :href="index()"
+                            class="text-sm text-muted-foreground hover:text-foreground"
+                            >Cancel</Link
+                        >
                     </div>
                 </Form>
             </div>

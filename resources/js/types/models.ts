@@ -20,6 +20,7 @@ export interface Question {
     uuid: string;
     name: string;
     quiz_id: string;
+    quiz:Quiz,
     answers?: Answer[];
 }
 

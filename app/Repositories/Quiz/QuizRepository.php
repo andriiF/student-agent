@@ -4,6 +4,7 @@ namespace App\Repositories\Quiz;
 
 use App\Models\Quiz\Quiz;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class QuizRepository
 {
@@ -14,6 +15,11 @@ class QuizRepository
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
+    }
+
+    public function getAllOrdered(array $columns): Collection
+    {
+        return Quiz::query()->select($columns)->orderBy('uuid')->get();
     }
 
     public function create(array $attributes): Quiz

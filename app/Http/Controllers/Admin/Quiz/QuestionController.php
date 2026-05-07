@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Quiz;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Quiz\QuestionRequest;
 use App\Models\Quiz\Question;
 use App\Models\Quiz\Quiz;
 use App\Services\Quiz\QuestionService;
+use App\Services\Quiz\QuizService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,7 +15,10 @@ use Inertia\Response;
 
 class QuestionController extends Controller
 {
-    public function __construct(protected QuestionService $questionService)
+    public function __construct(
+        protected QuestionService $questionService,
+        protected QuizService     $quizService
+    )
     {
     }
 
@@ -30,18 +35,13 @@ class QuestionController extends Controller
     public function create(): Response
     {
         return Inertia::render('questions/Create', [
-            'quizzes' => Quiz::query()->orderBy('name')->get(['uuid', 'name']),
+            'quizzes' => $this->quizService->getAllOrdered(['uuid', 'name']),
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(QuestionRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'quiz_id' => ['required', 'string', 'exists:quizzes,uuid'],
-        ]);
-
-        $this->questionService->create($validated);
+        $this->questionService->create($request->validated());
 
         return back()->with('success', 'Question created successfully.');
     }
@@ -49,21 +49,16 @@ class QuestionController extends Controller
     public function edit(Question $question): Response
     {
         return Inertia::render('questions/Edit', [
-            'question' => $question,
-            'quizzes' => Quiz::query()->orderBy('name')->get(['uuid', 'name']),
+            'question' => $question->load('answers', 'quiz.topics'),
+            'quizzes' => $this->quizService->getAllOrdered(['uuid', 'name']),
         ]);
     }
 
-    public function update(Request $request, Question $question): RedirectResponse
+    public function update(QuestionRequest $request, Question $question): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'quiz_id' => ['required', 'string', 'exists:quizzes,uuid'],
-        ]);
+        $this->questionService->update($question, $request->validated());
 
-        $this->questionService->update($question, $validated);
-
-        return redirect()->route('questions.index')
+        return redirect()->back()
             ->with('success', 'Question updated successfully.');
     }
 

@@ -45,7 +45,7 @@ class QuizController extends Controller
     public function edit(Quiz $quiz): Response
     {
         return Inertia::render('quizzes/Edit', [
-            'quiz' => $quiz->load('topics:uuid,name'),
+            'quiz' => $quiz->load('topics:uuid,name', 'questions.answers'),
             'topics' => Topic::query()->orderBy('name')->get(['uuid', 'name']),
         ]);
     }
