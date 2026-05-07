@@ -33,7 +33,7 @@ class AnswerService
     {
         $this->answerRepository->update($answer, [
             'name' => $data['name'],
-            'question_id' => $data['question_id'],
+            'question_id' => $data['question_id'] ?? $answer->question_id,
             'is_correct' => $data['is_correct'] ?? false,
             'is_active' => $data['is_active'] ?? true,
             'explanation' => $data['explanation'] ?? null,

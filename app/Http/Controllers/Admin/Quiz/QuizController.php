@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\Quiz;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Quiz\QuizRequest;
+use App\Http\Resources\Admin\TopicResource;
 use App\Models\Quiz\Quiz;
 use App\Models\Quiz\Topic;
 use App\Services\Quiz\QuizService;
+use App\Services\Quiz\TopicService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +16,7 @@ use Inertia\Response;
 
 class QuizController extends Controller
 {
-    public function __construct(protected QuizService $quizService)
+    public function __construct(protected QuizService $quizService, protected TopicService $topicService)
     {
     }
 
@@ -37,9 +39,11 @@ class QuizController extends Controller
 
     public function edit(Quiz $quiz): Response
     {
+        $topics = $this->topicService->get();
+
         return Inertia::render('quizzes/Edit', [
             'quiz' => $quiz->load('topics:uuid,name', 'questions.answers'),
-            'topics' => Topic::query()->orderBy('name')->get(['uuid', 'name']),
+            'topics' => TopicResource::collection($topics)->collection,
         ]);
     }
 

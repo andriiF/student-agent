@@ -46,7 +46,6 @@ const quizHref = props.question.quiz.uuid
                 />
                 <Heading variant="small" title="Edit Question" />
 
-
                 <AnswerManager
                     :answers="props.question.answers ?? []"
                     :question-uuid="props.question.uuid"
@@ -97,11 +96,6 @@ const quizHref = props.question.quiz.uuid
 
                     <div class="flex items-center gap-4">
                         <Button :disabled="processing">Save</Button>
-                        <Link
-                            :href="index()"
-                            class="text-sm text-muted-foreground hover:text-foreground"
-                            >Cancel</Link
-                        >
                     </div>
                 </Form>
             </div>

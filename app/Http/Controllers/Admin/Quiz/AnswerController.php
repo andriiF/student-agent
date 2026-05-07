@@ -39,7 +39,6 @@ class AnswerController extends Controller
     {
         return Inertia::render('answers/Edit', [
             'answer' => $answer->load('question.quiz.topics'),
-            'questions' => Question::query()->orderBy('name')->get(['uuid', 'name']),
         ]);
     }
 

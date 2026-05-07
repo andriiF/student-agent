@@ -63,6 +63,17 @@ const explonation = ref(props.answer.explanation);
                     class="space-y-6"
                     v-slot="{ errors, processing }"
                 >
+
+                    <div class="grid gap-2">
+                        <Label for="question">Question</Label>
+                        <Input
+                            id="question"
+                            name="question"
+                            readonly
+                            class="mt-1 block w-full"
+                            :default-value="props.answer.question.name"
+                        />
+                    </div>
                     <div class="grid gap-2">
                         <Label for="name">Answer text</Label>
                         <Input
@@ -77,38 +88,12 @@ const explonation = ref(props.answer.explanation);
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="question_id">Question</Label>
-                        <Select
-                            name="question_id"
-                            :default-value="props.answer.question_id"
-                            required
-                        >
-                            <SelectTrigger class="w-full">
-                                <SelectValue placeholder="Select a question" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem
-                                    v-for="question in questions"
-                                    :key="question.uuid"
-                                    :value="question.uuid"
-                                >
-                                    {{ question.name }}
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <InputError
-                            class="mt-2"
-                            :message="errors.question_id"
-                        />
-                    </div>
-
-                    <div class="grid gap-2">
                         <Label for="explanation">Explanation</Label>
                         <textarea
                             rows="4"
                             id="explanation"
                             name="explanation"
-                            class="mt-1 block w-full border-input bg-input/10 border p-2 dark:bg-input/30"
+                            class="mt-1 block w-full border border-input bg-input/10 p-2 dark:bg-input/30"
                             placeholder="Optional explanation"
                             v-model="explonation"
                         ></textarea>
@@ -158,11 +143,7 @@ const explonation = ref(props.answer.explanation);
 
                     <div class="flex items-center gap-4">
                         <Button :disabled="processing">Save</Button>
-                        <Link
-                            :href="index()"
-                            class="text-sm text-muted-foreground hover:text-foreground"
-                            >Cancel</Link
-                        >
+
                     </div>
                 </Form>
             </div>

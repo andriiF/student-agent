@@ -19,7 +19,6 @@ class AnswerRequest extends FormRequest
     {
         return [
             'name'        => ['required', 'string', 'max:255'],
-            'question_id' => ['required', 'string', 'exists:questions,uuid'],
             'is_correct'  => ['boolean'],
             'is_active'   => ['boolean'],
             'explanation' => ['nullable', 'string'],

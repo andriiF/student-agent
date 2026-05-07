@@ -4,6 +4,7 @@ namespace App\Repositories\Quiz;
 
 use App\Models\Quiz\Topic;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class TopicRepository
 {
@@ -14,6 +15,11 @@ class TopicRepository
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
+    }
+
+    public function get(): Collection
+    {
+        return Topic::query()->get();
     }
 
     public function create(array $attributes): Topic

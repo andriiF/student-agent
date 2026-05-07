@@ -87,11 +87,6 @@ const topicOptions = computed(() =>
 
                     <div class="flex items-center gap-4">
                         <Button :disabled="processing">Save</Button>
-                        <Link
-                            :href="index()"
-                            class="text-sm text-muted-foreground hover:text-foreground"
-                            >Cancel</Link
-                        >
                     </div>
                 </Form>
 
