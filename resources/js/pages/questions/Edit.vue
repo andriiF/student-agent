@@ -13,6 +13,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import AnswerManager from '@/pages/questions/AnswerManager.vue';
 import { dashboard } from '@/routes';
 import { index, update } from '@/routes/questions';
 import { edit as editQuiz } from '@/routes/quizzes';
@@ -20,8 +21,6 @@ import { edit as editTopic } from '@/routes/topics';
 import type { Quiz, Question } from '@/types';
 
 const props = defineProps<{ question: Question; quizzes: Quiz[] }>();
-
-console.log(props.question.quiz);
 
 const topicHref = props.question.quiz.topics?.[0]?.uuid
     ? editTopic(props.question.quiz.topics[0].uuid).url
@@ -47,6 +46,13 @@ const quizHref = props.question.quiz.uuid
                 />
                 <Heading variant="small" title="Edit Question" />
 
+
+                <AnswerManager
+                    :answers="props.question.answers ?? []"
+                    :question-uuid="props.question.uuid"
+                />
+
+                <hr class="border-border" />
                 <Form
                     v-bind="update(props.question.uuid)"
                     :action="update(props.question.uuid).url"

@@ -14,6 +14,7 @@ export interface Answer {
     is_active: boolean;
     explanation: string | null;
     order: number | null;
+    question: Question,
 }
 
 export interface Question {

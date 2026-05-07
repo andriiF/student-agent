@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Quiz;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Quiz\AnswerRequest;
 use App\Models\Quiz\Answer;
 use App\Models\Quiz\Question;
 use App\Services\Quiz\AnswerService;
@@ -34,45 +35,26 @@ class AnswerController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(AnswerRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'question_id' => ['required', 'string', 'exists:questions,uuid'],
-            'is_correct' => ['boolean'],
-            'is_active' => ['boolean'],
-            'explanation' => ['nullable', 'string'],
-            'order' => ['nullable', 'integer'],
-        ]);
+        $this->answerService->create($request->validated());
 
-        $this->answerService->create($validated);
-
-        return redirect()->route('answers.index')
-            ->with('success', 'Answer created successfully.');
+        return back()->with('success', 'Answer created successfully.');
     }
 
     public function edit(Answer $answer): Response
     {
         return Inertia::render('answers/Edit', [
-            'answer' => $answer,
+            'answer' => $answer->load('question.quiz.topics'),
             'questions' => Question::query()->orderBy('name')->get(['uuid', 'name']),
         ]);
     }
 
-    public function update(Request $request, Answer $answer): RedirectResponse
+    public function update(AnswerRequest $request, Answer $answer): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'question_id' => ['required', 'string', 'exists:questions,uuid'],
-            'is_correct' => ['boolean'],
-            'is_active' => ['boolean'],
-            'explanation' => ['nullable', 'string'],
-            'order' => ['nullable', 'integer'],
-        ]);
+        $this->answerService->update($answer, $request->validated());
 
-        $this->answerService->update($answer, $validated);
-
-        return redirect()->route('answers.index')
+        return redirect()->back()
             ->with('success', 'Answer updated successfully.');
     }
 
