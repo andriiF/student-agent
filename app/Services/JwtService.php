@@ -13,14 +13,15 @@ class JwtService
     public function generateToken(FrontendUser $user): string
     {
         $issuedAt = time();
-        $ttl = (int) env('JWT_TTL', 3600);
+        $ttl = (int)config('app.jwt_ttl');
 
         $payload = [
             'iss' => config('app.url'),
             'iat' => $issuedAt,
             'exp' => $issuedAt + $ttl,
-            'sub' => (string) $user->getKey(),
+            'sub' => (string)$user->getKey(),
             'email' => $user->email,
+            'id' => $user->uuid,
         ];
 
         return JWT::encode($payload, $this->secret(), 'HS256');
@@ -31,7 +32,7 @@ class JwtService
         try {
             $decoded = JWT::decode($token, new Key($this->secret(), 'HS256'));
 
-            return isset($decoded->sub) ? (string) $decoded->sub : null;
+            return isset($decoded->sub) ? (string)$decoded->sub : null;
         } catch (ExpiredException) {
             return null;
         } catch (Throwable) {
@@ -41,6 +42,6 @@ class JwtService
 
     private function secret(): string
     {
-        return (string) env('JWT_SECRET', config('app.key'));
+        return (string)config('app.jwt_secret');
     }
 }
