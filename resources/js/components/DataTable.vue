@@ -41,7 +41,7 @@ defineSlots<{
                     <td
                         v-for="col in columns"
                         :key="col.key"
-                        class="px-6 py-4 text-sm whitespace-nowrap text-card-foreground"
+                        class="px-6 py-4 text-sm whitespace-wrap text-card-foreground max-w-[150px]"
                     >
                         {{ row[col.key] }}
                     </td>

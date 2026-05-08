@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->uuid()->primary()->unique();
-            $table->string('name');
+            $table->text('name')->nullable();
             $table->foreignUuid('question_id')->constrained('questions','uuid')->onDelete('cascade');
             $table->boolean('is_correct')->default(false);
             $table->boolean('is_active')->default(true);

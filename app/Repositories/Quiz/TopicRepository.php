@@ -27,6 +27,16 @@ class TopicRepository
         return Topic::query()->create($attributes);
     }
 
+    public function findOrCreate(array $attributes): Topic
+    {
+        $row = Topic::query()->where($attributes)->first();
+
+        if ($row) {
+            return $row;
+        }
+        return $this->create($attributes);
+    }
+
     public function update(Topic $topic, array $attributes): bool
     {
         return $topic->update($attributes);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->uuid()->primary()->unique();
-            $table->string('name');
+            $table->text('name')->nullable();
             $table->foreignUuid('quiz_id')->constrained('quizzes','uuid')->onDelete('cascade');
             $table->timestamps();
         });
