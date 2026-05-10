@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head, Link } from '@inertiajs/vue3';
+import { Form, Head } from '@inertiajs/vue3';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/select';
 import AnswerManager from '@/pages/questions/AnswerManager.vue';
 import { dashboard } from '@/routes';
-import { index, update } from '@/routes/questions';
+import { update } from '@/routes/questions';
 import { edit as editQuiz } from '@/routes/quizzes';
 import { edit as editTopic } from '@/routes/topics';
 import type { Quiz, Question } from '@/types';

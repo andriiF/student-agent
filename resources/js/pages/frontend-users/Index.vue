@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
+import { Pencil, Trash2 } from 'lucide-vue-next';
 import DataTable from '@/components/DataTable.vue';
 import Pagination from '@/components/Pagination.vue';
 import { index } from '@/routes/frontendUsers';
 import { create } from '@/routes/frontendUsers';
 import { edit } from '@/routes/frontendUsers';
 import { destroy } from '@/routes/frontendUsers';
-import { Pencil, Trash2 } from 'lucide-vue-next';
 import type { FrontendUser } from '@/types';
 
 interface Props {

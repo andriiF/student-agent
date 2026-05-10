@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as frontUserIndex } from '@/routes/frontendUsers';
-import { index as userIndex } from '@/routes/users';
 import { index as topicIndex } from '@/routes/topics';
+import { index as userIndex } from '@/routes/users';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head, Link } from '@inertiajs/vue3';
+import { Form, Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Heading from '@/components/Heading.vue';
