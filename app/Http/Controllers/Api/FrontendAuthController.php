@@ -41,7 +41,7 @@ class FrontendAuthController extends Controller
 
         if ($user === null || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                'message' => 'Invalid credentials.',
+                'errors' => ['email' => ['Invalid credentials.']],
             ], Response::HTTP_UNAUTHORIZED);
         }
 
