@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head, Link } from '@inertiajs/vue3';
+import { Form, Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Heading from '@/components/Heading.vue';
@@ -8,15 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
+
 import { dashboard } from '@/routes';
-import { index, update } from '@/routes/answers';
+import { update } from '@/routes/answers';
 import { edit as editQuestion } from '@/routes/questions';
 import { edit as editQuiz } from '@/routes/quizzes';
 import { edit as editTopic } from '@/routes/topics';
