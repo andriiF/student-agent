@@ -7,6 +7,7 @@ use App\Http\Requests\Api\FrontUserLoginRequest;
 use App\Http\Requests\Api\FrontUserRegisterRequest;
 use App\Repositories\FrontendUserRepository;
 use App\Services\JwtService;
+use App\Services\Quiz\QuizService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,8 @@ class FrontendAuthController extends Controller
 {
     public function __construct(
         private readonly JwtService             $jwtService,
-        private readonly FrontendUserRepository $frontendUserRepository
+        private readonly FrontendUserRepository $frontendUserRepository,
+        private readonly QuizService            $quizService
     )
     {
     }
@@ -57,5 +59,12 @@ class FrontendAuthController extends Controller
         $user = $request->attributes->get('frontend_user');
 
         return response()->json(['user' => $user]);
+    }
+
+    public function getProgress(Request $request): JsonResponse
+    {
+        $user = $request->attributes->get('frontend_user');
+
+        return response()->json($this->quizService->getProgress($user));
     }
 }

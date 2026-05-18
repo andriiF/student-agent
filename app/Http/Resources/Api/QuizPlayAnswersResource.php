@@ -5,16 +5,14 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuizResource extends JsonResource
+class QuizPlayAnswersResource extends JsonResource
 {
     public static $wrap = null;
 
     public function toArray(Request $request): array
     {
         return [
-            'uuid' => $this->uuid,
-            'name' => $this->name,
-            'questions_count' => $this->questions()->count(),
+            'answers' => $this->answers,
         ];
     }
 }

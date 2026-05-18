@@ -16,6 +16,11 @@ class AnswerRepository
             ->withQueryString();
     }
 
+    public function find(string $id): ?Answer
+    {
+        return Answer::query()->find($id);
+    }
+
     public function create(array $attributes): Answer
     {
         return Answer::query()->create($attributes);
