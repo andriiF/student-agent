@@ -29,6 +29,10 @@ class QuizService
             'name' => $data['name'],
         ]);
 
+        if (!empty($data['topic_id'])) {
+            $quiz->topics()->sync([$data['topic_id']]);
+        }
+
         if (!empty($data['topic_ids'])) {
             $quiz->topics()->sync($data['topic_ids']);
         }
@@ -42,6 +46,9 @@ class QuizService
             'name' => $data['name'],
         ]);
 
+        if (array_key_exists('topic_id', $data)) {
+            $quiz->topics()->sync([$data['topic_id']]);
+        }
         if (array_key_exists('topic_ids', $data)) {
             $quiz->topics()->sync($data['topic_ids']);
         }

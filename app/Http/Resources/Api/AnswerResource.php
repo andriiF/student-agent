@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuestionResource extends JsonResource
+class AnswerResource extends JsonResource
 {
     public static $wrap = null;
 
@@ -14,7 +14,9 @@ class QuestionResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
-            'answers' => AnswerResource::collection($this->whenLoaded('answers'))
+            'is_active' => $this->is_active,
+            'is_correct' => $this->is_correct,
+            'explanation' => $this->explanation,
         ];
     }
 }

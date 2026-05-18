@@ -8,7 +8,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class QuestionService
 {
-    public function __construct(protected QuestionRepository $questionRepository)
+    public function __construct(protected QuestionRepository $questionRepository, protected AnswerService $answerService)
     {
     }
 
@@ -29,11 +29,43 @@ class QuestionService
     {
         $this->questionRepository->update($question, [
             'name' => $data['name'],
-            'quiz_id' => $data['quiz_id'],
         ]);
     }
 
-    public function delete(Question $question): void
+    public function updateOrDeleteAnswers(Question $question, array $answers): void
+    {
+        if (empty($answers)) {
+            $question->answers()->delete();
+            return;
+        }
+
+        $updatedAnswerIds = [];
+        foreach ($answers as $answer) {
+            if ($answer['uuid']) {
+                $this->answerService->update($answer['uuid'], [
+                    'name' => $answer['name'],
+                    'is_correct' => $answer['is_correct'],
+                    'is_active' => $answer['is_active'],
+                    'explanation' => $answer['explanation'],
+                ]);
+                $updatedAnswerIds[] = $answer['uuid'];
+                continue;
+            }
+            $newAnswer = $this->answerService->create([
+                'question_id' => $question->uuid,
+                'name' => $answer['name'],
+                'is_correct' => $answer['is_correct'],
+                'is_active' => $answer['is_active'],
+                'explanation' => $answer['explanation'],
+            ]);
+
+            $updatedAnswerIds[] = $newAnswer['uuid'];
+        }
+        $question->answers()->whereNotIn('uuid', $updatedAnswerIds)->delete();
+    }
+
+    public
+    function delete(Question $question): void
     {
         $this->questionRepository->delete($question);
     }
