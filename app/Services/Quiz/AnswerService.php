@@ -29,8 +29,10 @@ class AnswerService
         ]);
     }
 
-    public function update(Answer $answer, array $data): void
+    public function update(string $answerId, array $data): void
     {
+        $answer = $this->answerRepository->find($answerId);
+
         $this->answerRepository->update($answer, [
             'name' => $data['name'],
             'question_id' => $data['question_id'] ?? $answer->question_id,

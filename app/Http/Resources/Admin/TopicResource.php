@@ -14,6 +14,7 @@ class TopicResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'frontend_user_email' => $this->frontendUser?->email,
         ];
     }
 }

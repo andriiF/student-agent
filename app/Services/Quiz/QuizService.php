@@ -72,7 +72,15 @@ class QuizService
     {
 
         $qPlay = $this->quizPlayRepository->getOrCreateByUserAndQuiz($frontUser, $quiz);
-        $answer = $this->answerRepository->find($answerDTO->answer_id);
+
+        if (is_array($answerDTO->answer_id)) {
+            $answers = $this->answerRepository->findMultiple($answerDTO->answer_id);
+            $is_correct = $answers->where('is_correct', true)->count() == $answers->count();
+
+        } else {
+            $answer = $this->answerRepository->find($answerDTO->answer_id);
+            $is_correct = $answer->is_correct ?? false;
+        }
 
         $dataAnswers = [];
 
@@ -83,7 +91,7 @@ class QuizService
         $dataAnswers[] = [
             'answer_id' => $answerDTO->answer_id,
             'question_id' => $answerDTO->question_id,
-            'is_correct' => $answer->is_correct ?? false,
+            'is_correct' => $is_correct,
         ];
 
         $this->quizPlayRepository->update($qPlay, [

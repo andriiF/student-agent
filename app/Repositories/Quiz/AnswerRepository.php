@@ -4,6 +4,7 @@ namespace App\Repositories\Quiz;
 
 use App\Models\Quiz\Answer;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class AnswerRepository
 {
@@ -19,6 +20,11 @@ class AnswerRepository
     public function find(string $id): ?Answer
     {
         return Answer::query()->find($id);
+    }
+
+    public function findMultiple(array $ids): ?Collection
+    {
+        return Answer::query()->whereIn('uuid', $ids)->get();
     }
 
     public function create(array $attributes): Answer

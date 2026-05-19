@@ -20,7 +20,7 @@ class QuizPlayRequest extends FormRequest
     {
         return [
             'question_id' => 'required|uuid',
-            'answer_id' => 'nullable|uuid'
+            'answer_id' => 'nullable'
         ];
     }
 

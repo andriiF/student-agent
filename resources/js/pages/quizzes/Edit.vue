@@ -20,10 +20,16 @@ const topicHref = props.quiz.topics?.[0]?.uuid
     ? editTopic(props.quiz.topics[0].uuid).url
     : null;
 
-const selectedTopics = ref<string[]>(props.quiz.topics?.map((t) => t.uuid) ?? []);
+const selectedTopics = ref<string[]>(
+    props.quiz.topics?.map((t) => t.uuid) ?? [],
+);
+
 
 const topicOptions = computed(() =>
-    props.topics.map((t) => ({ value: t.uuid, label: t.name })),
+    props.topics.map((t) => ({
+        value: t.uuid,
+        label: t.name + '[' + t.frontend_user_email + ']',
+    })),
 );
 </script>
 
@@ -35,12 +41,13 @@ const topicOptions = computed(() =>
                 <Breadcrumbs
                     :breadcrumbs="[
                         { title: 'Dashboard', href: dashboard() },
-                        ...(topicHref ? [{ title: 'Topic', href: topicHref }] : [{ title: 'Quizzes', href: index() }]),
+                        ...(topicHref
+                            ? [{ title: 'Topic', href: topicHref }]
+                            : [{ title: 'Quizzes', href: index() }]),
                         { title: 'Edit Quiz' },
                     ]"
                 />
                 <Heading variant="small" title="Edit Quiz" />
-
 
                 <Form
                     v-bind="update(props.quiz.uuid)"
@@ -92,8 +99,6 @@ const topicOptions = computed(() =>
                     :questions="props.quiz.questions ?? []"
                     :quiz-uuid="props.quiz.uuid"
                 />
-
-
             </div>
         </div>
     </div>

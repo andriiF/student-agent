@@ -37,4 +37,5 @@ export interface Topic {
     name: string;
     front_user_id: string;
     quizzes?: Quiz[];
+    frontend_user_email?: string;
 }
