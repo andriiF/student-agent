@@ -23,7 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->configureDefaults();
+	    $this->configureDefaults();
+
+	    if(env('APP_ENV') !== 'local') {
+             \URL::forceScheme('https');
+           }
+	    
     }
 
     /**
