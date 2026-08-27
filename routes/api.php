@@ -15,6 +15,8 @@ Route::middleware(['api', AuthenticateFrontendJwt::class])->group(function (): v
     Route::get('quizplay/{quiz}', [QuizPlayController::class, 'show']);
     Route::post('quizplay/{quiz}', [QuizPlayController::class, 'saveAnswer']);
     Route::delete('quizplay/{quiz}', [QuizPlayController::class, 'destroy']);
+
+    Route::post('quiz/share', [QuizController::class, 'share']);
 });
 
 Route::prefix('auth')->middleware('api')->group(function (): void {

@@ -10,7 +10,14 @@ const props = defineProps<{
 }>();
 
 function pageUrl(page: number): string {
-    return `${props.baseUrl}?page=${page}`;
+    const [path, existingQuery = ''] = props.baseUrl.split('?');
+    const params = new URLSearchParams(existingQuery);
+
+    params.set('page', String(page));
+
+    const query = params.toString();
+
+    return query ? `${path}?${query}` : path;
 }
 </script>
 

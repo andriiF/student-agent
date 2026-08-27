@@ -57,6 +57,8 @@ class QuestionController extends Controller
 
     public function destroy(Question $question): RedirectResponse
     {
+        $this->authorize('delete', $question);
+
         $this->questionService->delete($question);
 
         return redirect()->route('questions.index')

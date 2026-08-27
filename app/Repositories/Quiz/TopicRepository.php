@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TopicRepository
 {
-    public function paginate(?string $search = null, int $perPage = 15): LengthAwarePaginator
+    public function paginate(?string $search = null, int $perPage = 15, array $with = []): LengthAwarePaginator
     {
         return Topic::query()
-            ->when($search, fn($q, $s) => $q->where('name', 'like', "%{$s}%"))
+            ->when($search, fn ($q, $s) => $q->where('name', 'ilike', "%{$s}%"))
+            ->with($with)
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
@@ -34,6 +35,7 @@ class TopicRepository
         if ($row) {
             return $row;
         }
+
         return $this->create($attributes);
     }
 

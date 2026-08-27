@@ -3,6 +3,7 @@
 namespace App\Services\Quiz;
 
 use App\DTO\AnswerStoreDTO;
+use App\Jobs\SignQuizToFrontUser;
 use App\Models\FrontendUser;
 use App\Models\Quiz\Quiz;
 use App\Models\Quiz\QuizPlay;
@@ -121,4 +122,18 @@ class QuizService
         ])->toArray();
     }
 
+    /**
+     * @param  list<string>  $ids
+     */
+    public function findByIds(array $ids): Collection
+    {
+        return $this->quizRepository->findByIds($ids);
+    }
+
+    public function share(array $quizIds, array $emails)
+    {
+        foreach ($emails as $email) {
+            SignQuizToFrontUser::dispatch($email, $quizIds);
+        }
+    }
 }

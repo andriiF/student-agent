@@ -22,6 +22,16 @@ class QuizRepository
         return Quiz::query()->select($columns)->orderBy('uuid')->get();
     }
 
+    /**
+     * @param  list<string>  $ids
+     */
+    public function findByIds(array $ids): Collection
+    {
+        return Quiz::query()
+            ->whereIn('uuid', $ids)
+            ->get();
+    }
+
     public function create(array $attributes): Quiz
     {
         return Quiz::query()->create($attributes);

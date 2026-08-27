@@ -13,10 +13,26 @@ defineProps<{
 defineSlots<{
     actions(props: { row: T }): unknown;
 }>();
+
+const getByPath = (obj: T, path: string): unknown => {
+    if (!path.includes('.')) {
+        return obj[path];
+    }
+
+    return path.split('.').reduce<unknown>((current, part) => {
+        if (current == null || typeof current !== 'object') {
+            return undefined;
+        }
+
+        return (current as Record<string, unknown>)[part];
+    }, obj);
+};
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+    <div
+        class="overflow-hidden rounded-lg border border-border bg-card shadow-sm"
+    >
         <table class="min-w-full divide-y divide-border">
             <thead class="bg-muted">
                 <tr>
@@ -27,7 +43,9 @@ defineSlots<{
                     >
                         {{ col.label }}
                     </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase">
+                    <th
+                        class="px-6 py-3 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase"
+                    >
                         Actions
                     </th>
                 </tr>
@@ -41,11 +59,13 @@ defineSlots<{
                     <td
                         v-for="col in columns"
                         :key="col.key"
-                        class="px-6 py-4 text-sm whitespace-wrap text-card-foreground max-w-[150px]"
+                        class="whitespace-wrap max-w-[150px] px-6 py-4 text-sm text-card-foreground"
                     >
-                        {{ row[col.key] }}
+                        {{ getByPath(row, col.key) }}
                     </td>
-                    <td class="px-6 py-4 text-sm whitespace-nowrap text-card-foreground">
+                    <td
+                        class="px-6 py-4 text-sm whitespace-nowrap text-card-foreground"
+                    >
                         <div class="flex gap-2">
                             <slot name="actions" :row="row" />
                         </div>

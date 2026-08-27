@@ -14,6 +14,7 @@ class QuestionResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'owner_id'=>$this->front_user_id,
             'answers' => AnswerResource::collection($this->whenLoaded('answers'))
         ];
     }

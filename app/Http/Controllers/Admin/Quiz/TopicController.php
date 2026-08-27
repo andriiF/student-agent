@@ -23,7 +23,7 @@ class TopicController extends Controller
 
     public function index(Request $request): Response
     {
-        $topics = $this->topicService->getPaginated($request->input('search'));
+        $topics = $this->topicService->getPaginated(search: $request->input('search'), with:['frontendUser']);
 
         return Inertia::render('topics/Index', [
             'topics' => $topics,

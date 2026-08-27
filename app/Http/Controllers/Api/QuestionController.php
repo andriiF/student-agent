@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quiz\QuestionRequest;
-use App\Http\Requests\Api\Quiz\TopicRequest;
 use App\Http\Resources\Api\QuestionResource;
 use App\Models\Quiz\Question;
-use App\Models\Quiz\Quiz;
 use App\Services\Quiz\AnswerService;
 use App\Services\Quiz\QuestionService;
 use App\Services\Quiz\QuizService;
@@ -35,10 +33,12 @@ class QuestionController extends Controller
     public function store(QuestionRequest $request)
     {
         $data = $request->validated();
+        $frontUser = $request->attributes->get('frontend_user');
 
         $question = $this->questionService->create([
             'name' => $data['name'],
             'quiz_id' => $data['quiz'],
+            'front_user_id' => $frontUser->uuid,
         ]);
 
 
@@ -65,5 +65,16 @@ class QuestionController extends Controller
         $this->questionService->updateOrDeleteAnswers($question, $data['answers'] ?? []);
 
         return response()->json(['message' => 'Question created successfully']);
+    }
+
+    public function destroy(Request $request, Question $question)
+    {
+        $frontUser = $request->attributes->get('frontend_user');
+
+        $this->authorizeForUser($frontUser, 'delete', $question);
+
+        $this->questionService->delete($question);
+
+        return response()->json(['message' => 'Question deleted successfully']);
     }
 }

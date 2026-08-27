@@ -13,10 +13,11 @@ class TopicService
     {
     }
 
-    public function getPaginated(?string $search, int $perPage = 15): LengthAwarePaginator
+    public function getPaginated(?string $search, int $perPage = 15, array $with = []): LengthAwarePaginator
     {
-        return $this->topicRepository->paginate($search, $perPage);
+        return $this->topicRepository->paginate($search, $perPage, $with);
     }
+
     public function get(): Collection
     {
         return $this->topicRepository->get();

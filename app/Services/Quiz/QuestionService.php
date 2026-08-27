@@ -22,6 +22,7 @@ class QuestionService
         return $this->questionRepository->create([
             'name' => $data['name'],
             'quiz_id' => $data['quiz_id'],
+            'front_user_id' => $data['front_user_id'] ?? null,
         ]);
     }
 
@@ -64,9 +65,9 @@ class QuestionService
         $question->answers()->whereNotIn('uuid', $updatedAnswerIds)->delete();
     }
 
-    public
-    function delete(Question $question): void
+    public function delete(Question $question): void
     {
+        $this->updateOrDeleteAnswers($question, []);
         $this->questionRepository->delete($question);
     }
 }

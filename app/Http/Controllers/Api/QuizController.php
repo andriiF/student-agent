@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quiz\QuizRequest;
+use App\Http\Requests\Api\Quiz\ShareRequest;
 use App\Http\Requests\Api\Quiz\TopicRequest;
 use App\Http\Resources\Api\QuizEditResource;
 use App\Http\Resources\Api\QuizResource;
@@ -46,5 +47,21 @@ class QuizController extends Controller
         $this->quizService->update($quiz, $data);
 
         return response()->json(['message' => 'Topic updated successfully']);
+    }
+
+    public function share(ShareRequest $request)
+    {
+        $data = $request->validated();
+        $frontUser = $request->attributes->get('frontend_user');
+
+        $quizzes = $this->quizService->findByIds($data['quiz_ids']);
+
+        foreach ($quizzes as $quiz) {
+            $this->authorizeForUser($frontUser, 'share', $quiz);
+        }
+
+        $this->quizService->share($data['quiz_ids'], $data['emails']);
+
+        return response()->json(['message' => 'Quiz share successfully']);
     }
 }
